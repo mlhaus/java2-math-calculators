@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"edu.kirkwood.model","l":"Fraction"},{"p":"edu.kirkwood","l":"Main"}];updateSearchResults();
