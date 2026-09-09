@@ -27,8 +27,8 @@ public class Fraction implements Comparable<Fraction> {
      * @param denominator the bottom portion of the fraction
      */
     public Fraction(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        setNumerator(numerator);
+        setDenominator(denominator);
     }
 
     /**
@@ -129,7 +129,11 @@ public class Fraction implements Comparable<Fraction> {
      * @return the greatest common divisor of {@code a} and {@code b}
      */
     public static int gcd(int a, int b) {
-        return 0;
+        // Source: https://stackoverflow.com/a/30693436
+        if (b == 0) {
+            return Math.abs(a);
+        }
+        return gcd(b, a % b);
     }
 
     /**
@@ -140,7 +144,11 @@ public class Fraction implements Comparable<Fraction> {
      * @return the least common multiple of {@code a} and {@code b}
      */
     public static int lcm(int a, int b) {
-        return 0;
+        // Source: https://stackoverflow.com/a/4202114
+        if(a == 0 || b == 0) {
+            return 0;
+        }
+        return a * (b / gcd(a, b));
     }
 
     /**
@@ -166,7 +174,11 @@ public class Fraction implements Comparable<Fraction> {
      * @return the sum of this fraction and {@code other}
      */
     public Fraction add(Fraction other) {
-        return null;
+        int newNumerator = this.numerator * other.denominator + this.denominator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        result.simplify();
+        return result;
     }
 
     /**
