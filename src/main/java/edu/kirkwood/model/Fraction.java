@@ -72,8 +72,16 @@ public class Fraction implements Comparable<Fraction> {
      * Sets the denominator of this fraction.
      *
      * @param denominator the new denominator
+     * @throws ArithmeticException if the denominator is zero
      */
-    public void setDenominator(int denominator) {
+    public void setDenominator(int denominator) throws ArithmeticException {
+        if(denominator == 0) {
+            throw new ArithmeticException("Denominator cannot be zero.");
+        }
+        if(denominator < 0) {
+            numerator *= -1;
+            denominator *= -1;
+        }
         this.denominator = denominator;
     }
 

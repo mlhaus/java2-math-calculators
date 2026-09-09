@@ -82,8 +82,21 @@ class FractionTest {
         // Act
         f1.setDenominator(-3);
         // Assert
-        assertEquals(-3, f1.getDenominator());
+
+        assertEquals(-1, f1.getNumerator());
+        assertEquals(3, f1.getDenominator());
         assertEquals("-1/3", f1.toString());
+    }
+
+    @Test
+    void setNumeratorDenominatorNegative() {
+        // Act
+        f1.setNumerator(-3);
+        f1.setDenominator(-3);
+        // Assert
+        assertEquals(3, f1.getNumerator());
+        assertEquals(3, f1.getDenominator());
+        assertEquals("3/3", f1.toString());
     }
 
     @Test
