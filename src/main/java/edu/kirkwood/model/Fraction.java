@@ -94,7 +94,15 @@ public class Fraction implements Comparable<Fraction> {
      */
     @Override
     public int compareTo(Fraction o) {
-        return 0;
+        long thisNumerator = (long)this.numerator;
+        long thisDenominator = (long)this.denominator;
+        long otherNumerator = (long)o.numerator;
+        long otherDenominator = (long)o.denominator;
+
+        long a = thisNumerator * otherDenominator;
+        long b = otherNumerator * thisDenominator;
+
+        return Long.compare(a, b);
     }
 
     /**
@@ -107,8 +115,13 @@ public class Fraction implements Comparable<Fraction> {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Fraction fraction = (Fraction) o;
+        simplify();// Simplify the current fraction
+        fraction.simplify(); // Simplify the other fraction
         return numerator == fraction.numerator && denominator == fraction.denominator;
     }
+
+
+
 
     /**
      * This method is supported for the benefit of hash tables such as HashMap and HashSet.
@@ -167,15 +180,15 @@ public class Fraction implements Comparable<Fraction> {
      */
     public String toMixedNumber(){
         String result = "";
-        double numerator = this.numerator;
-        double denominator = this.denominator;
-
-        int remainder = Math.abs((int)numerator % (int)denominator);
-        int wholeNumber = (int)Math.floor(numerator/denominator);
-        Fraction remainingFraction = new Fraction(remainder, (int)denominator);
-        remainingFraction.simplify();
+        int numerator = this.numerator;
+        int denominator = this.denominator;
+        int remainder = Math.abs(numerator % denominator);
+        int wholeNumber = numerator/denominator;
+        Fraction remainingFraction;
 
         if(remainder != 0){
+            remainingFraction = new Fraction(remainder, denominator);
+            remainingFraction.simplify();
             result = wholeNumber+" "+remainingFraction.toString();
         }
         else{
