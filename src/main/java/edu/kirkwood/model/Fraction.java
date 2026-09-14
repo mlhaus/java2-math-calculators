@@ -155,7 +155,9 @@ public class Fraction implements Comparable<Fraction> {
      * Reduces this fraction to its simplest equivalent form.
      */
     public void simplify() {
-
+        int g = gcd(this.numerator, this.denominator);
+        setNumerator(this.numerator/g);
+        setDenominator(this.denominator/g);
     }
 
     /**
@@ -163,8 +165,23 @@ public class Fraction implements Comparable<Fraction> {
      *
      * @return the mixed-number representation of this fraction
      */
-    public String toMixedNumber() {
-        return "";
+    public String toMixedNumber(){
+        String result = "";
+        double numerator = this.numerator;
+        double denominator = this.denominator;
+
+        int remainder = Math.abs((int)numerator % (int)denominator);
+        int wholeNumber = (int)Math.floor(numerator/denominator);
+        Fraction remainingFraction = new Fraction(remainder, (int)denominator);
+        remainingFraction.simplify();
+
+        if(remainder != 0){
+            result = wholeNumber+" "+remainingFraction.toString();
+        }
+        else{
+            result = Integer.toString(wholeNumber);
+        }
+        return result;
     }
 
     /**
@@ -188,7 +205,11 @@ public class Fraction implements Comparable<Fraction> {
      * @return the difference between this fraction and {@code other}
      */
     public Fraction subtract(Fraction other) {
-        return null;
+        int newNumerator = this.numerator * other.denominator - this.denominator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        result.simplify();
+        return result;
     }
 
     /**
@@ -198,16 +219,29 @@ public class Fraction implements Comparable<Fraction> {
      * @return the product of this fraction and {@code other}
      */
     public Fraction multiply(Fraction other) {
-        return null;
+        int newNumerator = this.numerator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        Fraction result = new Fraction(newNumerator, newDenominator);
+        result.simplify();
+        return result;
     }
 
     /**
      * Divides this fraction by another fraction.
      *
-     * @param other the fraction to divide by
+     * @param otherFraction the fraction to divide by
      * @return the quotient of this fraction divided by {@code other}
      */
-    public Fraction divide(Fraction other) {
-        return null;
+    public Fraction divide(Fraction otherFraction){
+        Fraction newFraction = null;
+        try {
+            int newNumerator = numerator * otherFraction.getDenominator();
+            int newDenominator = denominator * otherFraction.getNumerator();
+            newFraction = new Fraction(newNumerator,newDenominator);
+            newFraction.simplify();
+        } catch (ArithmeticException e) {
+            throw e;
+        }
+        return newFraction;
     }
 }
