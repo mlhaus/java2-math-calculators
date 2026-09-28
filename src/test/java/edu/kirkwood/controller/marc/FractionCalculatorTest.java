@@ -312,6 +312,20 @@ class FractionCalculatorTest {
     }
 
     @Test
+    @DisplayName("Test parseFraction with invalid mixed number format should throw exception")
+    void parseFractionWithInvalidDenominator_ThrowsException() {
+        // Act and Assert
+        Exception e = assertThrows(IllegalArgumentException.class, () -> FractionCalculator.parseFraction("1/"));
+        // Arrange
+        String expectedError = "Invalid fraction format";
+        // Act
+        String actualError = e.getMessage();
+        // Assert
+        assertEquals(expectedError, actualError);
+        assertTrue(actualError.contains(expectedError));
+    }
+
+    @Test
     @DisplayName("Test parseFraction with zero denominator should throw exception")
     void parseFractionWithZeroDenominator_ThrowsException() {
         Exception e = assertThrows(ArithmeticException.class, () -> FractionCalculator.parseFraction("5/0"));

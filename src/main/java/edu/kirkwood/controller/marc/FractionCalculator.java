@@ -124,6 +124,9 @@ public class FractionCalculator {
         if(str.contains(" ")) {
             // Break str into two parts (whole number and fraction)
             String[] parts = str.split(" ", 2);
+            if(parts.length < 2) {
+                throw new IllegalArgumentException("Invalid fraction format");
+            }
             // Validate the whole number
             int whole = 0;
             try {
@@ -166,6 +169,9 @@ public class FractionCalculator {
         else if(str.contains("/")) {
             // Split the fraction into numerator and denominator parts
             String[] parts = str.split("/");
+            if(parts.length < 2) {
+                throw new IllegalArgumentException("Invalid fraction format");
+            }
             int num = 0;
             int den = 0;
             // Validate the numerator
