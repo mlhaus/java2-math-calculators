@@ -91,7 +91,7 @@ public class FractionCalculator {
             try {
                 whole = Integer.parseInt(parts[0]);
             } catch(NumberFormatException e) {
-                throw new NumberFormatException("Invalid whole number");
+                throw new NumberFormatException("Invalid whole number: '" + parts[0] + "'");
             }
             // Break the fraction into two parts
             String[] parts2 = parts[1].split("/", 2); // "1/2" => {"1", "2"}
@@ -109,12 +109,17 @@ public class FractionCalculator {
             } catch(NumberFormatException e) {
                 throw new NumberFormatException("Invalid denominator");
             }
+            boolean isNegative = whole < 0 || numerator < 0;
             // No validation errors
             if(whole >= 0) { // Calculates positive fraction
-                numerator = whole * denominator + numerator;
+                numerator = Math.abs(whole) * denominator + Math.abs(numerator);
             } else { // Calculates negative fraction
-                numerator = whole * denominator - numerator;
+                numerator = Math.abs(whole) * denominator - Math.abs(numerator);
             }
+            if(isNegative) {
+                numerator = -numerator;
+            }
+
             Fraction result = null;
             try {
                 result = new Fraction(numerator, denominator);
@@ -165,4 +170,90 @@ public class FractionCalculator {
             return new Fraction(whole, 1);
         }
     }
+
+    /**
+     * Parse a string into a Fraction objecct. Handles whole numbers, proper and improper fractions, and mixed numbers
+     * @param str The string input to parse
+     * @return a Fraction representing the parsed string
+     * @throws NumberFormatException if the numerator or denominator are not valid integers
+     * @throws IllegalArgumentException if the fraction format is not valid
+     */
+    // Implemented by GitHub Copilot with the following prompt:
+    // Implement the `parseFraction` method in the `FractionCalculator` class to get the
+    // related unit tests in the `FractionCalculatorTest` class to pass.
+    // I used this as a follow-up prompt
+    // I'm new to Java programming. Can you help me better understand the implementation of the `parseFraction` method.
+//    public static Fraction parseFraction(String str) throws NumberFormatException, IllegalArgumentException {
+//        if(str.contains(" ")) {
+//            String[] parts = str.split(" ", 2);
+//            int whole;
+//            try {
+//                whole = Integer.parseInt(parts[0]);
+//            } catch(NumberFormatException e) {
+//                throw new NumberFormatException("Invalid mixed number format");
+//            }
+//
+//            if(parts.length != 2) {
+//                throw new IllegalArgumentException("Invalid mixed number format");
+//            }
+//
+//            String[] fractionParts = parts[1].split("/", -1);
+//            if(fractionParts.length != 2) {
+//                throw new IllegalArgumentException("Invalid mixed number format");
+//            }
+//
+//            int numerator;
+//            try {
+//                numerator = Integer.parseInt(fractionParts[0]);
+//            } catch(NumberFormatException e) {
+//                throw new NumberFormatException("Invalid numerator");
+//            }
+//
+//            int denominator;
+//            try {
+//                denominator = Integer.parseInt(fractionParts[1]);
+//            } catch(NumberFormatException e) {
+//                throw new NumberFormatException("Invalid denominator");
+//            }
+//
+//            boolean isNegative = whole < 0 || numerator < 0;
+//            numerator = Math.abs(whole) * denominator + Math.abs(numerator);
+//
+//            if (isNegative) {
+//                numerator = -numerator;
+//            }
+//
+//            return new Fraction(numerator, denominator);
+//        }
+//
+//        if(str.contains("/")) {
+//            String[] parts = str.split("/", -1);
+//            if(parts.length != 2) {
+//                throw new IllegalArgumentException("Invalid fraction format");
+//            }
+//
+//            int numerator;
+//            try {
+//                numerator = Integer.parseInt(parts[0]);
+//            } catch(NumberFormatException e) {
+//                throw new NumberFormatException("Invalid numerator");
+//            }
+//
+//            int denominator;
+//            try {
+//                denominator = Integer.parseInt(parts[1]);
+//            } catch(NumberFormatException e) {
+//                throw new NumberFormatException("Invalid denominator");
+//            }
+//            return new Fraction(numerator, denominator);
+//        }
+//
+//        int whole;
+//        try {
+//            whole = Integer.parseInt(str);
+//        } catch(NumberFormatException e) {
+//            throw new NumberFormatException("Invalid whole number");
+//        }
+//        return new Fraction(whole, 1);
+//    }
 }

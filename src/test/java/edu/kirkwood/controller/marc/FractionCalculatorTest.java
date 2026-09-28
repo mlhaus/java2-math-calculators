@@ -293,7 +293,8 @@ class FractionCalculatorTest {
         // Act
         String actualError = e.getMessage();
         // Assert
-        assertEquals(expectedError, actualError);
+//        assertEquals(expectedError, actualError);
+        assertTrue(actualError.contains(expectedError));
     }
 
 
@@ -315,5 +316,32 @@ class FractionCalculatorTest {
     void parseFractionWithZeroDenominator_ThrowsException() {
         Exception e = assertThrows(ArithmeticException.class, () -> FractionCalculator.parseFraction("5/0"));
         assertTrue(e.getMessage().contains("Denominator cannot be zero"));
+    }
+
+    @Test
+    void parseFractionWithMissingDenominatorThrowsException() {
+        // Act and Assert
+        NumberFormatException e = assertThrows(NumberFormatException.class, () -> FractionCalculator.parseFraction("1/ + 1"));
+
+        // Arrange
+        String expectedError = "Invalid whole number";
+        // Act
+        String actualError = e.getMessage();
+        // Assert
+//        assertEquals(expectedError, actualError);
+        assertTrue(actualError.contains(expectedError));
+    }
+
+    @Test
+    void parseMixedFractionWithMissingDenominatorException() {
+        // Act and Assert
+        NumberFormatException e = assertThrows(NumberFormatException.class, () -> FractionCalculator.parseFraction("1 1/ + 1"));
+
+        // Arrange
+        String expectedError = "Invalid denominator";
+        // Act
+        String actualError = e.getMessage();
+        // Assert
+        assertEquals(expectedError, actualError);
     }
 }
