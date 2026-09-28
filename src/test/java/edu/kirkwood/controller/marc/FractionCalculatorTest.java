@@ -210,11 +210,11 @@ class FractionCalculatorTest {
         NumberFormatException e = assertThrows(NumberFormatException.class, () -> FractionCalculator.parseFraction("a"));
 
         // Arrange
-        String expectedError = "Invalid fraction format";
+        String expectedError = "Invalid whole number";
         // Act
         String actualError = e.getMessage();
         // Assert
-        assertEquals(expectedError, actualError);
+        assertTrue(actualError.contains(expectedError));
     }
 
     @Test
@@ -303,7 +303,7 @@ class FractionCalculatorTest {
         // Act and Assert
         Exception e = assertThrows(IllegalArgumentException.class, () -> FractionCalculator.parseFraction("1 2 3"));
         // Arrange
-        String expectedError = "Invalid mixed number format";
+        String expectedError = "Invalid numerator";
         // Act
         String actualError = e.getMessage();
         // Assert

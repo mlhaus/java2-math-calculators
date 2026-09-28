@@ -115,7 +115,13 @@ public class FractionCalculator {
             } else { // Calculates negative fraction
                 numerator = whole * denominator - numerator;
             }
-            Fraction result = new Fraction(numerator, denominator);
+            Fraction result = null;
+            try {
+                result = new Fraction(numerator, denominator);
+            } catch (ArithmeticException e) {
+                // This will be thrown if the denominator is zero
+                throw new ArithmeticException(e.getMessage() + ": '" + str + "'");
+            }
             return result;
         }
         // Check proper/improper fractions, doesn't contain space, but it does contain a slash
@@ -149,7 +155,14 @@ public class FractionCalculator {
             return result;
         }
         // Check whole numbers
-
-        return null;
+        else {
+            int whole = 0;
+            try {
+                whole = Integer.parseInt(str);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Invalid whole number: '" + str + "'");
+            }
+            return new Fraction(whole, 1);
+        }
     }
 }
