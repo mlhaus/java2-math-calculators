@@ -4,6 +4,7 @@ import edu.kirkwood.model.Fraction;
 
 import static edu.kirkwood.view.Messages.fractionGoodbye;
 import static edu.kirkwood.view.Messages.fractionGreet;
+import static edu.kirkwood.view.UIUtility.displayError;
 import static edu.kirkwood.view.UIUtility.pressEnterToContinue;
 import static edu.kirkwood.view.UserInput.getString;
 
@@ -21,11 +22,48 @@ public class FractionCalculator {
             if(value.equalsIgnoreCase("q") || value.equalsIgnoreCase("quit")) {
                 break;
             }
+            // Validate input
+            String[] parts  = null;
+            try {
+                parts = splitCalculation(value);
+            } catch (IllegalArgumentException e) {
+                displayError(e.getMessage());
+                continue;
+            }
+            String fractionStr1 = parts[0];
+            String operator = parts[1];
+            String fractionStr2 = parts[2];
 
+            Fraction f1 = null;
+            Fraction f2 = null;
+            try {
+                f1 = parseFraction(fractionStr1);
+                f2 = parseFraction(fractionStr2);
+            } catch(Exception e) {
+                displayError(e.getMessage());
+                continue;
+            }
+            // Perform mathematical operations
+            Fraction result = null;
+            if(operator.equals("+")) {
+                result = f1.add(f2);
+            } else if(operator.equals("-")) {
+                result = f1.subtract(f2);
+            } else if(operator.equals("*")) {
+                result = f1.multiply(f2);
+            } else if(operator.equals("/")) {
+                try {
+                    result = f1.divide(f2);
+                } catch(ArithmeticException e) { // Can't divide by 0
+                    displayError(e.getMessage());
+                    continue;
+                }
+            }
+            // Display output
+            System.out.printf("Result: %s %s %s = %s%n%n",
+                    f1.toMixedNumber(), operator, f2.toMixedNumber(), result.toMixedNumber());
         }
-        // TODO: Validate input
-        // TODO: Perform mathematical operations
-        // TODO: Display output
+
         fractionGoodbye();
         pressEnterToContinue();
     }

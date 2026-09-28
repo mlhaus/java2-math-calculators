@@ -180,19 +180,25 @@ public class Fraction implements Comparable<Fraction> {
      */
     public String toMixedNumber(){
         String result = "";
-        int numerator = this.numerator;
-        int denominator = this.denominator;
-        int remainder = Math.abs(numerator % denominator);
-        int wholeNumber = numerator/denominator;
-        Fraction remainingFraction;
+        this.simplify();
 
-        if(remainder != 0){
-            remainingFraction = new Fraction(remainder, denominator);
-            remainingFraction.simplify();
-            result = wholeNumber+" "+remainingFraction.toString();
+        if (denominator == 0) {
+            throw new ArithmeticException("Denominator cannot be zero.");
         }
-        else{
-            result = Integer.toString(wholeNumber);
+        if (numerator == 0) {
+            result += "0";
+        } else if (Math.abs(numerator) < Math.abs(denominator)) {
+            result += numerator + "/" + denominator;
+        } else if (Math.abs(numerator) >= Math.abs(denominator)) {
+            int wholeNumber = numerator / denominator;
+            int remainder = Math.abs(numerator % denominator);
+            if (remainder == 0) {
+                result += wholeNumber;
+            } else {
+                result += wholeNumber + " " + remainder + "/" + denominator;
+            }
+        } else {
+            result += "0";
         }
         return result;
     }
