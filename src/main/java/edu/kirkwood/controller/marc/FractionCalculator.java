@@ -110,12 +110,7 @@ public class FractionCalculator {
                 throw new NumberFormatException("Invalid denominator");
             }
             boolean isNegative = whole < 0 || numerator < 0;
-            // No validation errors
-            if(whole >= 0) { // Calculates positive fraction
-                numerator = Math.abs(whole) * denominator + Math.abs(numerator);
-            } else { // Calculates negative fraction
-                numerator = Math.abs(whole) * denominator - Math.abs(numerator);
-            }
+            numerator = Math.abs(whole) * denominator + Math.abs(numerator);
             if(isNegative) {
                 numerator = -numerator;
             }
