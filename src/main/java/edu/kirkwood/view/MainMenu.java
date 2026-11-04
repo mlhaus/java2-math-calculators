@@ -1,5 +1,6 @@
 package edu.kirkwood.view;
 
+import edu.kirkwood.controller.leesonj.ProbabilityCalculator;
 import edu.kirkwood.controller.marc.FractionCalculator;
 import edu.kirkwood.controller.Michael.PolyDifferentialCalculator;
 
@@ -14,6 +15,7 @@ public class MainMenu {
         String[] menuItems = {
                 "Marc's Fraction Calculator",
                 "Michael's Polynomial Differentiation Calculator",
+                "Jim's Probability Calculator",
                 "Quit"
         };
         while(true) {
@@ -25,6 +27,9 @@ public class MainMenu {
                     break;
                 case 2:
 
+                    break;
+                case 3:
+                    ProbabilityCalculator.start();
                     break;
                 default:
                     return;
